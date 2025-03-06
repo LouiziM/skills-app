@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Clock, Calendar, AlertCircle, Briefcase, FolderOpen, TrafficCone } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { Progress } from "@/components/ui/progress"
+import Bar  from "@/components/ui/bar"
 import { Button } from "@/components/ui/button"
 import { ProjectsDialog } from "./projects-dialog"
 
@@ -57,10 +57,7 @@ export function WorkloadPresenceCard({ workloadPresence, projects }: WorkloadPre
               <p className="text-sm font-medium">Taux de Présence</p>
               <p className="text-sm font-medium">{tauxPresence}%</p>
             </div>
-            <Progress 
-              value={Number.parseFloat(tauxPresence)} 
-              className={`h-2 ${getProgressColor(Number.parseFloat(tauxPresence))}`} 
-            />
+            <Bar displayPercentage={false} percentage={Number.parseFloat(tauxPresence)}  color={getProgressColor(Number.parseFloat(tauxPresence))} />
           </div>
 
           <div className="grid grid-cols-2 gap-4">

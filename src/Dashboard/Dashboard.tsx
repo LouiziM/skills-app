@@ -1,11 +1,11 @@
 import { BarChart3, Users, GraduationCap, ClipboardCheck } from "lucide-react"
 import DashboardCard from "./DashboardCard"
-import SkillBar from "./SkillBar"
+import Bar from "../components/ui/bar"
 import ActivityItem from "./ActivityItem"
 
 export default function Dashboard() {
   return (
-    <div className="ml-64 p-8">
+    <div className="w-full">
       <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -20,7 +20,7 @@ export default function Dashboard() {
           title="Trainings"
           value="16"
           icon={<ClipboardCheck className="w-8 h-8 text-purple-500" />}
-          change="+2%"
+          change="-2%"
         />
         <DashboardCard
           title="Evaluations"
@@ -34,11 +34,11 @@ export default function Dashboard() {
         <div className="bg-white p-6 rounded-lg shadow">
           <h2 className="text-lg font-semibold mb-4">Skills Distribution</h2>
           <div className="space-y-4">
-            <SkillBar name="Communication" percentage={78} color="bg-blue-500" />
-            <SkillBar name="Technical Support" percentage={65} color="bg-green-500" />
-            <SkillBar name="Problem Solving" percentage={82} color="bg-purple-500" />
-            <SkillBar name="Customer Service" percentage={91} color="bg-orange-500" />
-            <SkillBar name="Product Knowledge" percentage={58} color="bg-red-500" />
+            <Bar name="Communication" percentage={78} color="bg-blue-500" />
+            <Bar name="Technical Support" percentage={65} color="bg-green-500" />
+            <Bar name="Problem Solving" percentage={82} color="bg-purple-500" />
+            <Bar name="Customer Service" percentage={91} color="bg-orange-500" />
+            <Bar name="Product Knowledge" percentage={58} color="bg-red-500" />
           </div>
         </div>
 

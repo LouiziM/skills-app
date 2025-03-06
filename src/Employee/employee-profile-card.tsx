@@ -2,6 +2,8 @@ import { Briefcase, Mail, MapPin, Phone, Calendar, User, Globe } from "lucide-re
 import { Card, CardDescription, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
+import profileFemale from '../assets/profileFemale.png';
+import profileMale from '../assets/profile.png';
 
 type EmployeeProfileProps = {
   employee: {
@@ -25,6 +27,7 @@ type EmployeeProfileProps = {
   }
 }
 
+
 // Function to calculate age from date of birth
 const calculateAge = (dateDeNaissance: string) => {
   const birthDate = new Date(dateDeNaissance)
@@ -41,19 +44,27 @@ export function EmployeeProfileCard({ employee }: EmployeeProfileProps) {
   const callAgentSkills = ["Communication", "Résolution", "Empathie", "CRM", "Multitâche"]
   const age = calculateAge(employee.dateDeNaissance) // Calculate age
 
+  const getEmployeeImage = () => {
+    if (employee.image) {
+      return employee.image;
+    }
+    return employee?.civilité === "Mme" ? profileFemale : profileMale;
+  }; 
+
   return (
     <Card className="mb-6 overflow-hidden ">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         {/* Section centrale avec background */}
         <div className="flex flex-col items-center p-6 bg-muted/50 sm:col-span-2 md:col-span-1 md:order-2">
-          <div className="relative w-32 h-32 mb-4">
+          <div className="relative w-36 h-36   mb-4">
             <img
-              src={employee.avatar}
+              src={getEmployeeImage()}
               alt={`${employee.nom} ${employee.prénom}`}
-              className="rounded-full object-cover border-4 border-background w-full h-full"
+              className="rounded-full object-cover w-full h-full"
             />
+
           </div>
-          
+
           <CardTitle className="text-xl text-center">
             {employee.civilité}. {employee.nom} {employee.prénom}
           </CardTitle>
@@ -72,7 +83,7 @@ export function EmployeeProfileCard({ employee }: EmployeeProfileProps) {
 
           <div className="flex flex-wrap gap-2 justify-center mt-4">
             {callAgentSkills.map((skill) => (
-              <Badge key={skill} variant="secondary">
+              <Badge key={skill} variant="secondary" className="bg-gray-200">
                 {skill}
               </Badge>
             ))}
@@ -85,7 +96,7 @@ export function EmployeeProfileCard({ employee }: EmployeeProfileProps) {
             <h3 className="text-sm font-medium text-muted-foreground">Département</h3>
             <p className="font-medium">{employee.department}</p>
           </div>
-          
+
           <Separator />
 
           <div>
@@ -135,7 +146,7 @@ export function EmployeeProfileCard({ employee }: EmployeeProfileProps) {
                 <span>{employee.typeContrat}</span>
               </div>
             </div>
-            
+
             <Separator />
 
             <div>

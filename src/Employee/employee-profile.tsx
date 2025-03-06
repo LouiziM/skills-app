@@ -25,7 +25,6 @@ export default function EmployeeProfile() {
     position: "Agent de Centre d'Appels",
     department: "Service Client",
     avatar: "/placeholder.svg?height=400&width=400",
-    skills: ["Gestion des appels", "Résolution de problèmes", "Service client", "CRM"],
     performance: {
       appelsResolus: 245,
       appelsEscalades: 32,

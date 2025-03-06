@@ -5,6 +5,9 @@ import EmployeeProfile from "./Employee/employee-profile"
 import Dashboard from "./Dashboard/Dashboard"
 import SkillsView from "./Skills/SkillsView"
 import EvaluationView from "./Evaluations/EvaluationView"
+import Test from "./test/test"
+import Notifications from "./Notification/notifications"
+import Trainings from "./Formations/trainings"
 
 
 export default function App() {
@@ -19,6 +22,16 @@ export default function App() {
             <AuthGuard>
               <Nav>
                 <Dashboard />
+              </Nav>
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/Formations"
+          element={
+            <AuthGuard>
+              <Nav>
+                <Trainings />
               </Nav>
             </AuthGuard>
           }
@@ -39,6 +52,27 @@ export default function App() {
             <AuthGuard>
               <Nav>
                 <EvaluationView />
+              </Nav>
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/Test"
+          element={
+            <AuthGuard>
+              <Nav>
+                <Test />
+              </Nav>
+            </AuthGuard>
+          }
+        />
+
+        <Route
+          path="/Notifications"
+          element={
+            <AuthGuard>
+              <Nav>
+                <Notifications />
               </Nav>
             </AuthGuard>
           }

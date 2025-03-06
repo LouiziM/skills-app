@@ -24,7 +24,7 @@ export default function SkillsFilter({
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input
             type="text"
-            placeholder="Search skills..."
+            placeholder="Rechercher des compétences..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="pl-10 pr-4 py-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -39,9 +39,9 @@ export default function SkillsFilter({
               onChange={(e) => setFilterType(e.target.value)}
               className="pl-10 pr-8 py-2 border rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              <option value="">All Types</option>
-              <option value="Technical">Technical</option>
-              <option value="Behavioral">Behavioral</option>
+              <option value="">Tous les types</option>
+              <option value="Technique">Technique</option>
+              <option value="Comportemental">Comportemental</option>
             </select>
           </div>
 
@@ -52,10 +52,10 @@ export default function SkillsFilter({
               onChange={(e) => setFilterLevel(e.target.value)}
               className="pl-10 pr-8 py-2 border rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              <option value="">All Levels</option>
-              <option value="Beginner">Beginner</option>
-              <option value="Intermediate">Intermediate</option>
-              <option value="Advanced">Advanced</option>
+              <option value="">Tous les niveaux</option>
+              <option value="Débutant">Débutant</option>
+              <option value="Intermédiaire">Intermédiaire</option>
+              <option value="Avancé">Avancé</option>
               <option value="Expert">Expert</option>
             </select>
           </div>
@@ -64,4 +64,3 @@ export default function SkillsFilter({
     </div>
   )
 }
-

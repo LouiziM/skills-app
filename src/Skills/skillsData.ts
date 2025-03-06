@@ -1,46 +1,45 @@
 export const skillsData = [
   {
     id: "1",
-    name: "Customer Communication",
-    type: "Behavioral",
-    level: "Advanced",
+    name: "Communication Client",
+    type: "Comportemental",
+    level: "Avancé",
     description:
-      "Ability to effectively communicate with customers, understand their needs, and provide clear explanations.",
+      "Capacité à communiquer efficacement avec les clients, comprendre leurs besoins et fournir des explications claires.",
     createdAt: "2023-05-15",
   },
   {
     id: "2",
-    name: "Technical Troubleshooting",
-    type: "Technical",
-    level: "Intermediate",
-    description: "Ability to diagnose and resolve technical issues through systematic problem-solving approaches.",
+    name: "Dépannage Technique",
+    type: "Technique",
+    level: "Intermédiaire",
+    description: "Capacité à diagnostiquer et résoudre des problèmes techniques grâce à des approches systématiques de résolution de problèmes.",
     createdAt: "2023-06-22",
   },
   {
     id: "3",
-    name: "Product Knowledge",
-    type: "Technical",
+    name: "Connaissance du Produit",
+    type: "Technique",
     level: "Expert",
     description:
-      "In-depth understanding of product features, capabilities, and limitations to provide accurate information.",
+      "Compréhension approfondie des fonctionnalités, capacités et limites du produit pour fournir des informations précises.",
     createdAt: "2023-04-10",
   },
   {
     id: "4",
-    name: "Conflict Resolution",
-    type: "Behavioral",
-    level: "Intermediate",
+    name: "Résolution de Conflits",
+    type: "Comportemental",
+    level: "Intermédiaire",
     description:
-      "Ability to handle difficult situations and resolve conflicts with customers in a professional manner.",
+      "Capacité à gérer des situations difficiles et à résoudre les conflits avec les clients de manière professionnelle.",
     createdAt: "2023-07-05",
   },
   {
     id: "5",
-    name: "Time Management",
-    type: "Behavioral",
-    level: "Advanced",
-    description: "Efficiently managing time to handle multiple tasks and customer inquiries effectively.",
+    name: "Gestion du Temps",
+    type: "Comportemental",
+    level: "Avancé",
+    description: "Gérer efficacement son temps pour traiter plusieurs tâches et demandes clients de manière efficace.",
     createdAt: "2023-03-18",
   },
-]
-
+];

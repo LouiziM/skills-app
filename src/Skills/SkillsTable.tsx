@@ -3,8 +3,8 @@ import { Edit, Trash2 } from "lucide-react"
 interface Skill {
   id: string
   name: string
-  type: "Technical" | "Behavioral"
-  level: "Beginner" | "Intermediate" | "Advanced" | "Expert"
+  type: string
+  level: string
   description: string
   createdAt: string
 }
@@ -21,13 +21,13 @@ export default function SkillsTable({ skills, onEdit, onDelete }: SkillsTablePro
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Level</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Niveau</th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Description
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Créé le</th>
             <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
           </tr>
         </thead>
@@ -41,7 +41,7 @@ export default function SkillsTable({ skills, onEdit, onDelete }: SkillsTablePro
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span
                     className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      skill.type === "Technical" ? "bg-blue-100 text-blue-800" : "bg-green-100 text-green-800"
+                      skill.type === "Technique" ? "bg-blue-100 text-blue-800" : "bg-green-100 text-green-800"
                     }`}
                   >
                     {skill.type}
@@ -50,11 +50,11 @@ export default function SkillsTable({ skills, onEdit, onDelete }: SkillsTablePro
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span
                     className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      skill.level === "Beginner"
+                      skill.level === "Débutant"
                         ? "bg-gray-100 text-gray-800"
-                        : skill.level === "Intermediate"
+                        : skill.level === "Intermédiaire"
                           ? "bg-yellow-100 text-yellow-800"
-                          : skill.level === "Advanced"
+                          : skill.level === "Avancé"
                             ? "bg-orange-100 text-orange-800"
                             : "bg-red-100 text-red-800"
                     }`}
@@ -79,7 +79,7 @@ export default function SkillsTable({ skills, onEdit, onDelete }: SkillsTablePro
           ) : (
             <tr>
               <td colSpan={6} className="px-6 py-4 text-center text-sm text-gray-500">
-                No skills found matching your criteria
+                Aucune compétence trouvée correspondant à vos critères
               </td>
             </tr>
           )}
@@ -88,4 +88,3 @@ export default function SkillsTable({ skills, onEdit, onDelete }: SkillsTablePro
     </div>
   )
 }
-

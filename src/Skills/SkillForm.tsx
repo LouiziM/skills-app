@@ -6,8 +6,8 @@ import { X } from "lucide-react"
 interface Skill {
   id: string
   name: string
-  type: "Technical" | "Behavioral"
-  level: "Beginner" | "Intermediate" | "Advanced" | "Expert"
+  type: string
+  level: string
   description: string
   createdAt: string
 }
@@ -21,8 +21,8 @@ interface SkillFormProps {
 export default function SkillForm({ skill, onSave, onCancel }: SkillFormProps) {
   const [formData, setFormData] = useState<Omit<Skill, "id" | "createdAt"> & { id?: string; createdAt?: string }>({
     name: "",
-    type: "Technical",
-    level: "Beginner",
+    type: "Technique",
+    level: "Débutant",
     description: "",
   })
 
@@ -53,7 +53,7 @@ export default function SkillForm({ skill, onSave, onCancel }: SkillFormProps) {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
         <div className="flex justify-between items-center p-4 border-b">
-          <h2 className="text-lg font-semibold">{skill ? "Edit Skill" : "Add New Skill"}</h2>
+          <h2 className="text-lg font-semibold">{skill ? "Modifier la Compétence" : "Ajouter une Nouvelle Compétence"}</h2>
           <button onClick={onCancel} className="text-gray-500 hover:text-gray-700">
             <X className="w-5 h-5" />
           </button>
@@ -62,7 +62,7 @@ export default function SkillForm({ skill, onSave, onCancel }: SkillFormProps) {
         <form onSubmit={handleSubmit} className="p-4">
           <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-              Skill Name
+              Nom de la Compétence
             </label>
             <input
               type="text"
@@ -87,14 +87,14 @@ export default function SkillForm({ skill, onSave, onCancel }: SkillFormProps) {
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               >
-                <option value="Technical">Technical</option>
-                <option value="Behavioral">Behavioral</option>
+                <option value="Technique">Technique</option>
+                <option value="Comportemental">Comportemental</option>
               </select>
             </div>
 
             <div>
               <label htmlFor="level" className="block text-sm font-medium text-gray-700 mb-1">
-                Level
+                Niveau
               </label>
               <select
                 id="level"
@@ -103,9 +103,9 @@ export default function SkillForm({ skill, onSave, onCancel }: SkillFormProps) {
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               >
-                <option value="Beginner">Beginner</option>
-                <option value="Intermediate">Intermediate</option>
-                <option value="Advanced">Advanced</option>
+                <option value="Débutant">Débutant</option>
+                <option value="Intermédiaire">Intermédiaire</option>
+                <option value="Avancé">Avancé</option>
                 <option value="Expert">Expert</option>
               </select>
             </div>
@@ -131,13 +131,13 @@ export default function SkillForm({ skill, onSave, onCancel }: SkillFormProps) {
               onClick={onCancel}
               className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
-              Cancel
+              Annuler
             </button>
             <button
               type="submit"
               className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-medium hover:bg-indigo-700"
             >
-              {skill ? "Update Skill" : "Add Skill"}
+              {skill ? "Mettre à jour la Compétence" : "Ajouter la Compétence"}
             </button>
           </div>
         </form>
@@ -145,4 +145,3 @@ export default function SkillForm({ skill, onSave, onCancel }: SkillFormProps) {
     </div>
   )
 }
-

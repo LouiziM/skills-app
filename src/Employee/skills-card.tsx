@@ -1,15 +1,15 @@
 import { useState } from "react"
 import { Briefcase, ChevronUp, ChevronDown } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
+import Bar  from "@/components/ui/bar"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
 type Skill = {
   id: string
   nom: string
-  type: "Technique" | "Comportemental"
-  niveau: "Débutant" | "Intermédiaire" | "Avancé" | "Expert"
+  type: string
+  niveau: string
   progression: number
 }
 
@@ -56,7 +56,7 @@ export function SkillsCard({ skills }: SkillsCardProps) {
                   <span className="text-sm font-medium">{skill.nom}</span>
                   <span className="text-xs text-muted-foreground">{skill.niveau}</span>
                 </div>
-                <Progress value={skill.progression} className={`h-2 ${getProgressColor(skill.niveau)}`} />
+                <Bar displayPercentage={false} percentage={skill.progression} color={getProgressColor(skill.niveau)} />
               </div>
             ))}
           </div>
@@ -88,7 +88,7 @@ export function SkillsCard({ skills }: SkillsCardProps) {
                   <div className="mt-2 space-y-2">
                     <p className="text-sm">Type: {skill.type}</p>
                     <p className="text-sm">Niveau: {skill.niveau}</p>
-                    <Progress value={skill.progression} className={`h-2 ${getProgressColor(skill.niveau)}`} />
+                    <Bar displayPercentage={false} percentage={skill.progression} color={getProgressColor(skill.niveau)} />
                   </div>
                 )}
               </div>

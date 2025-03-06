@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, BarChart2, Users, Calendar, Settings, LogOut } from 'lucide-react';
+import { Home, BarChart2, Users, Calendar, Settings, LogOut ,GraduationCap,LayoutDashboard,BarChart3,NotebookPen} from 'lucide-react';
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -26,16 +26,18 @@ export function AppSidebar() {
 
   const sidebarItems: SidebarItem[] = [
     { title: 'Profile', icon: Users, href: "/Profile" },
-    { title: 'Evaluations', icon: Home, href: "/Evaluations" },
-    { title: 'Dashboard', icon: Calendar, href: "/Dashboard" },
-    { title: 'Skills', icon: BarChart2, href: "/Skills" },
+    { title: 'Formations', icon: GraduationCap, href: "/Formations" },
+    // { title: 'Evaluations', icon: NotebookPen, href: "/Evaluations" },
+    { title: 'Skills', icon: BarChart3, href: "/Skills" },
+    // { title: 'Dashboard', icon: LayoutDashboard, href: "/Dashboard" },
+    // { title: 'Test', icon: BarChart2, href: "/Test" },
   ];
 
   // Function to check if the current path matches the sidebar item
   const isActive = (href: string) => location.pathname === href;
 
   return (
-    <Sidebar className={cn("border-r")}>
+    <Sidebar className={cn("border-r ")}>
       <SidebarHeader className="border-b p-4">
         <img
           src={konectaLogo}
