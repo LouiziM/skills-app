@@ -10,42 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Progress } from "@/components/ui/progress"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 
-interface FeedbackItem {
-  id: string
-  rating: number
-  comment: string
-  author: {
-    name: string
-    avatar: string
-  }
-  date: string
-}
-
-interface TrainingFeedback {
-  satisfaction: number
-  comments: FeedbackItem[]
-  ratingDistribution: {
-    5: number
-    4: number
-    3: number
-    2: number
-    1: number
-  }
-}
-
-interface Training {
-  id: number
-  title: string
-  type: string
-  startDate: string
-  endDate: string
-  status: string
-  description: string
-  instructor: string
-  enrolledCount: number
-  maxCapacity: number
-  feedback?: TrainingFeedback
-}
+import type { Training } from "./types"
 
 interface TrainingFeedbackCardProps {
   training: Training
@@ -53,7 +18,7 @@ interface TrainingFeedbackCardProps {
   isManagerOrHR?: boolean
 }
 
-export function TrainingFeedbackCard({ training, onViewDetails, isManagerOrHR = true }: TrainingFeedbackCardProps) {
+export function TrainingFeedbackCard({ training, onViewDetails, isManagerOrHR = false }: TrainingFeedbackCardProps) {
   const [expandedFeedback, setExpandedFeedback] = useState<string | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
 
@@ -92,8 +57,14 @@ export function TrainingFeedbackCard({ training, onViewDetails, isManagerOrHR = 
   const isCompleted = training.status.toLowerCase() === "terminé"
   const hasFeedback = !!training.feedback
 
+  // Function to determine if feedback can be viewed
+  const canViewFeedback = (training: Training) => {
+    // Only managers/HR can see feedback, regardless of status
+    return isManagerOrHR
+  }
+
   return (
-    <Card className="flex flex-col hover:shadow-lg transition-shadow duration-300 w-full h-full mb-4">
+    <Card className="flex flex-col hover:shadow-lg transition-shadow duration-300 w-full h-full mb-4 bg-white">
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
           <div>
@@ -132,7 +103,7 @@ export function TrainingFeedbackCard({ training, onViewDetails, isManagerOrHR = 
           Voir les Détails
         </Button>
 
-        {isManagerOrHR && isCompleted && hasFeedback && (
+        {isCompleted && hasFeedback && isManagerOrHR && (
           <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger asChild>
               <Button variant="secondary" size="sm" className="flex items-center gap-1">

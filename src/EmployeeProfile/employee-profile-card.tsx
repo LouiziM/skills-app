@@ -8,7 +8,7 @@ import profileMale from '../assets/profile.png';
 type EmployeeProfileProps = {
   employee: {
     civilité: "M." | "Mme"
-    nationalité: string // Added nationalité
+    nationalité: string
     nom: string
     prénom: string
     dateDeNaissance: string
@@ -23,10 +23,9 @@ type EmployeeProfileProps = {
     position: string
     department: string
     avatar: string
-    skills: string[]
+    skills: any[]
   }
 }
-
 
 // Function to calculate age from date of birth
 const calculateAge = (dateDeNaissance: string) => {
@@ -45,24 +44,24 @@ export function EmployeeProfileCard({ employee }: EmployeeProfileProps) {
   const age = calculateAge(employee.dateDeNaissance) // Calculate age
 
   const getEmployeeImage = () => {
-    if (employee.image) {
-      return employee.image;
-    }
+    // if (employee.avatar) {
+    //   return employee.avatar
+    // }
     return employee?.civilité === "Mme" ? profileFemale : profileMale;
-  }; 
+
+  }
 
   return (
     <Card className="mb-6 overflow-hidden ">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         {/* Section centrale avec background */}
         <div className="flex flex-col items-center p-6 bg-muted/50 sm:col-span-2 md:col-span-1 md:order-2">
-          <div className="relative w-36 h-36   mb-4">
+          <div className="relative w-36 h-36 mb-4">
             <img
-              src={getEmployeeImage()}
+              src={getEmployeeImage() || "/placeholder.svg"}
               alt={`${employee.nom} ${employee.prénom}`}
               className="rounded-full object-cover w-full h-full"
             />
-
           </div>
 
           <CardTitle className="text-xl text-center">
@@ -117,7 +116,9 @@ export function EmployeeProfileCard({ employee }: EmployeeProfileProps) {
                 <MapPin className="h-4 w-4" />
                 <div>
                   <p>{employee.adresse}</p>
-                  <p className="text-sm text-muted-foreground">{employee.ville}, {employee.pays}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {employee.ville}, {employee.pays}
+                  </p>
                 </div>
               </div>
             </div>
@@ -156,7 +157,6 @@ export function EmployeeProfileCard({ employee }: EmployeeProfileProps) {
                   <Calendar className="h-4 w-4" />
                   <span> {employee.dateEmbauche}</span>
                 </div>
-
               </div>
             </div>
           </div>
@@ -165,3 +165,4 @@ export function EmployeeProfileCard({ employee }: EmployeeProfileProps) {
     </Card>
   )
 }
+

@@ -7,6 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
+import { Label } from "@/components/ui/label"
 
 import {
   Dialog,
@@ -30,6 +32,7 @@ import {
 import { TrainingCalendar } from "./training-calendar"
 import { CreateTrainingDialog } from "./create-training-dialog"
 import { EditTrainingDialog } from "./edit-training-dialog"
+import { TrainingTableView } from "./training-table-view"
 
 // Update imports to use the shared types and utils
 import type { Training } from "./types"
@@ -163,10 +166,9 @@ const initialTrainings: Training[] = [
   },
 ]
 
-// Extract the renderTrainingCard function to a separate utility function that can be shared
-// Add this at the top of the file, after the imports
-
 export default function Trainings() {
+  // Add isManagerOrHR state that will be shared across components
+  const [isManagerOrHR, setIsManagerOrHR] = useState(false)
   const [trainings, setTrainings] = useState<Training[]>(initialTrainings)
   const [searchTerm, setSearchTerm] = useState("")
   const [filterType, setFilterType] = useState("all")
@@ -197,13 +199,13 @@ export default function Trainings() {
   }
 
   // Ajouter une nouvelle formation
-  const handleTrainingCreated = (newTraining: Training) => {
+  const handleTrainingCreated = (newTraining: any) => {
     const trainingWithId = {
       ...newTraining,
       id: Math.max(...trainings.map((t) => t.id), 0) + 1,
-      hidden: false,
     }
     setTrainings([...trainings, trainingWithId])
+    setIsCreateDialogOpen(false)
   }
 
   // Supprimer une formation
@@ -217,17 +219,20 @@ export default function Trainings() {
 
   // Ouvrir la boîte de dialogue de suppression
   const openDeleteDialog = (training: Training) => {
+    if (!isManagerOrHR) return
     setSelectedTraining(training)
     setIsDeleteDialogOpen(true)
   }
 
   // Basculer la visibilité d'une formation
   const toggleTrainingVisibility = (training: Training) => {
+    if (!isManagerOrHR) return
     setTrainings(trainings.map((t) => (t.id === training.id ? { ...t, hidden: !t.hidden } : t)))
   }
 
   // Ouvrir la boîte de dialogue d'édition
   const openEditDialog = (training: Training) => {
+    if (!isManagerOrHR) return
     setSelectedTraining(training)
     setIsEditDialogOpen(true)
   }
@@ -251,15 +256,15 @@ export default function Trainings() {
     }
   }
 
-  // Update the renderTrainingCard method to use the shared function
+  // Update the renderTrainingCard method to use the shared function and pass isManagerOrHR
   const renderTrainingCard = (training: Training) => {
     return renderTrainingCardWithActions(
       training,
       handleViewDetails,
-      openEditDialog,
-      openDeleteDialog,
-      toggleTrainingVisibility,
-      true, // isManagerOrHR
+      isManagerOrHR ? openEditDialog : undefined,
+      isManagerOrHR ? openDeleteDialog : undefined,
+      isManagerOrHR ? toggleTrainingVisibility : undefined,
+      isManagerOrHR,
     )
   }
 
@@ -268,18 +273,28 @@ export default function Trainings() {
       <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
         <h2 className="text-2xl font-bold">Formations</h2>
 
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            onClick={() => setShowHidden(!showHidden)}
-            className={showHidden ? "bg-blue-50" : ""}
-          >
-            {showHidden ? <Eye className="mr-2 h-4 w-4" /> : <EyeOff className="mr-2 h-4 w-4" />}
-            {showHidden ? "Afficher tout" : "Afficher masquées"}
-          </Button>
-          <Button className="bg-blue-500 hover:bg-blue-600 text-white" onClick={() => setIsCreateDialogOpen(true)}>
-            <Plus className="mr-2 h-4 w-4" /> Nouvelle Formation
-          </Button>
+        <div className="flex items-center gap-4">
+          {/* Add toggle for isManagerOrHR */}
+          <div className="flex items-center space-x-2">
+            <Switch id="manager-mode" checked={isManagerOrHR} onCheckedChange={setIsManagerOrHR} />
+            <Label htmlFor="manager-mode">Mode Manager/RH</Label>
+          </div>
+
+          {isManagerOrHR && (
+            <>
+              <Button
+                variant="outline"
+                onClick={() => setShowHidden(!showHidden)}
+                className={showHidden ? "bg-blue-50" : ""}
+              >
+                {showHidden ? <Eye className="mr-2 h-4 w-4" /> : <EyeOff className="mr-2 h-4 w-4" />}
+                {showHidden ? "Afficher tout" : "Afficher masquées"}
+              </Button>
+              <Button className="bg-blue-500 hover:bg-blue-600 text-white" onClick={() => setIsCreateDialogOpen(true)}>
+                <Plus className="mr-2 h-4 w-4" /> Nouvelle Formation
+              </Button>
+            </>
+          )}
         </div>
       </div>
 
@@ -331,6 +346,10 @@ export default function Trainings() {
           <TabsTrigger value="calendar" className="flex-1 sm:flex-none">
             Vue Calendrier
           </TabsTrigger>
+          {/* Add new table view tab */}
+          <TabsTrigger value="table" className="flex-1 sm:flex-none">
+            Vue en Tableau
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="list" className="space-y-4">
@@ -348,9 +367,22 @@ export default function Trainings() {
           <TrainingCalendar
             trainings={trainings.filter((t) => !t.hidden || showHidden)}
             onViewDetails={handleViewDetails}
-            onEditTraining={openEditDialog}
-            onDeleteTraining={openDeleteDialog}
-            onToggleVisibility={toggleTrainingVisibility}
+            onEditTraining={isManagerOrHR ? openEditDialog : undefined}
+            onDeleteTraining={isManagerOrHR ? openDeleteDialog : undefined}
+            onToggleVisibility={isManagerOrHR ? toggleTrainingVisibility : undefined}
+            isManagerOrHR={isManagerOrHR}
+          />
+        </TabsContent>
+
+        {/* Add new table view content */}
+        <TabsContent value="table">
+          <TrainingTableView
+            trainings={filteredTrainings}
+            isManagerOrHR={isManagerOrHR}
+            onViewDetails={handleViewDetails}
+            onEditTraining={isManagerOrHR ? openEditDialog : undefined}
+            onDeleteTraining={isManagerOrHR ? openDeleteDialog : undefined}
+            onToggleVisibility={isManagerOrHR ? toggleTrainingVisibility : undefined}
           />
         </TabsContent>
       </Tabs>
@@ -442,39 +474,43 @@ export default function Trainings() {
               </div>
 
               <DialogFooter className="flex gap-2">
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setIsDetailDialogOpen(false)
-                    openEditDialog(selectedTraining)
-                  }}
-                >
-                  <Edit className="mr-2 h-4 w-4" />
-                  Modifier
-                </Button>
-                <Button variant="outline" onClick={() => toggleTrainingVisibility(selectedTraining)}>
-                  {selectedTraining.hidden ? (
-                    <>
-                      <Eye className="mr-2 h-4 w-4" />
-                      Afficher
-                    </>
-                  ) : (
-                    <>
-                      <EyeOff className="mr-2 h-4 w-4" />
-                      Masquer
-                    </>
-                  )}
-                </Button>
-                <Button
-                  variant="destructive"
-                  onClick={() => {
-                    setIsDetailDialogOpen(false)
-                    openDeleteDialog(selectedTraining)
-                  }}
-                >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Supprimer
-                </Button>
+                {isManagerOrHR && (
+                  <>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setIsDetailDialogOpen(false)
+                        openEditDialog(selectedTraining)
+                      }}
+                    >
+                      <Edit className="mr-2 h-4 w-4" />
+                      Modifier
+                    </Button>
+                    <Button variant="outline" onClick={() => toggleTrainingVisibility(selectedTraining)}>
+                      {selectedTraining.hidden ? (
+                        <>
+                          <Eye className="mr-2 h-4 w-4" />
+                          Afficher
+                        </>
+                      ) : (
+                        <>
+                          <EyeOff className="mr-2 h-4 w-4" />
+                          Masquer
+                        </>
+                      )}
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      onClick={() => {
+                        setIsDetailDialogOpen(false)
+                        openDeleteDialog(selectedTraining)
+                      }}
+                    >
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Supprimer
+                    </Button>
+                  </>
+                )}
                 <Button variant="outline" onClick={() => setIsDetailDialogOpen(false)}>
                   Fermer
                 </Button>
@@ -485,14 +521,16 @@ export default function Trainings() {
       </Dialog>
 
       {/* CreateTrainingDialog */}
-      <CreateTrainingDialog
-        open={isCreateDialogOpen}
-        onOpenChange={setIsCreateDialogOpen}
-        onTrainingCreated={handleTrainingCreated}
-      />
+      {isManagerOrHR && (
+        <CreateTrainingDialog
+          open={isCreateDialogOpen}
+          onOpenChange={setIsCreateDialogOpen}
+          onTrainingCreated={handleTrainingCreated}
+        />
+      )}
 
       {/* EditTrainingDialog */}
-      {selectedTraining && (
+      {isManagerOrHR && selectedTraining && (
         <EditTrainingDialog
           open={isEditDialogOpen}
           onOpenChange={setIsEditDialogOpen}

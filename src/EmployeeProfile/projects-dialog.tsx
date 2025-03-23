@@ -1,57 +1,60 @@
-import { useState } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
+"use client"
+
+import { useState } from "react"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Input } from "@/components/ui/input"
 
 type Project = {
-  id: string;
-  nom: string;
-  dateDébut: string;
-  dateFin: string;
-  créePar: string;
-  créeLe: string;
-  posteOccupé: string;
-};
+  id: string
+  nom: string
+  dateDébut: string
+  dateFin: string
+  créePar: string
+  créeLe: string
+  posteOccupé: string
+}
 
 type ProjectsDialogProps = {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  projects: Project[];
-};
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  projects: Project[]
+}
 
 type SortConfig = {
-  key: keyof Project;
-  direction: "ascending" | "descending";
-};
+  key: keyof Project
+  direction: "ascending" | "descending"
+}
 
 export function ProjectsDialog({ open, onOpenChange, projects }: ProjectsDialogProps) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
+  const [searchTerm, setSearchTerm] = useState("")
+  const [sortConfig, setSortConfig] = useState<SortConfig | null>(null)
 
   const sortedProjects = [...projects].sort((a, b) => {
     if (sortConfig !== null) {
       if (a[sortConfig.key] < b[sortConfig.key]) {
-        return sortConfig.direction === "ascending" ? -1 : 1;
+        return sortConfig.direction === "ascending" ? -1 : 1
       }
       if (a[sortConfig.key] > b[sortConfig.key]) {
-        return sortConfig.direction === "ascending" ? 1 : -1;
+        return sortConfig.direction === "ascending" ? 1 : -1
       }
     }
-    return 0;
-  });
+    return 0
+  })
 
-  const filteredProjects = sortedProjects.filter((project) =>
-    project.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    project.créePar.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredProjects = sortedProjects.filter(
+    (project) =>
+      project.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.créePar.toLowerCase().includes(searchTerm.toLowerCase()),
+  )
 
   const requestSort = (key: keyof Project) => {
-    let direction: "ascending" | "descending" = "ascending";
+    let direction: "ascending" | "descending" = "ascending"
     if (sortConfig && sortConfig.key === key && sortConfig.direction === "ascending") {
-      direction = "descending";
+      direction = "descending"
     }
-    setSortConfig({ key, direction });
-  };
+    setSortConfig({ key, direction })
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -69,39 +72,27 @@ export function ProjectsDialog({ open, onOpenChange, projects }: ProjectsDialogP
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead 
-                  className="sticky top-0 bg-background" 
-                >
-                  Nom du Projet
-                </TableHead>
-                <TableHead 
-                  className="sticky top-0 bg-background " 
-                >
-                  Créé Par
-                </TableHead>
-                <TableHead 
-                  className="sticky top-0 bg-background cursor-pointer" 
+                <TableHead className="sticky top-0 bg-background">Nom du Projet</TableHead>
+                <TableHead className="sticky top-0 bg-background ">Créé Par</TableHead>
+                <TableHead
+                  className="sticky top-0 bg-background cursor-pointer"
                   onClick={() => requestSort("posteOccupé")}
                 >
-                  Poste Occupé {sortConfig?.key === "posteOccupé" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}
+                  Poste Occupé{" "}
+                  {sortConfig?.key === "posteOccupé" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}
                 </TableHead>
-                <TableHead 
-                  className="sticky top-0 bg-background cursor-pointer" 
+                <TableHead
+                  className="sticky top-0 bg-background cursor-pointer"
                   onClick={() => requestSort("dateDébut")}
                 >
-                  Date de Début {sortConfig?.key === "dateDébut" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}
+                  Date de Début{" "}
+                  {sortConfig?.key === "dateDébut" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}
                 </TableHead>
-                <TableHead 
-                  className="sticky top-0 bg-background cursor-pointer" 
-                  onClick={() => requestSort("dateFin")}
-                >
+                <TableHead className="sticky top-0 bg-background cursor-pointer" onClick={() => requestSort("dateFin")}>
                   Date de Fin {sortConfig?.key === "dateFin" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}
                 </TableHead>
 
-                <TableHead 
-                  className="sticky top-0 bg-background cursor-pointer" 
-                  onClick={() => requestSort("créeLe")}
-                >
+                <TableHead className="sticky top-0 bg-background cursor-pointer" onClick={() => requestSort("créeLe")}>
                   Créé Le {sortConfig?.key === "créeLe" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}
                 </TableHead>
               </TableRow>
@@ -122,5 +113,6 @@ export function ProjectsDialog({ open, onOpenChange, projects }: ProjectsDialogP
         </div>
       </DialogContent>
     </Dialog>
-  );
+  )
 }
+

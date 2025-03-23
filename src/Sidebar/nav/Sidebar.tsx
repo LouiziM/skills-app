@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, BarChart2, Users, Calendar, Settings, LogOut ,GraduationCap,LayoutDashboard,BarChart3,NotebookPen} from 'lucide-react';
+import { Home, BarChart2, Users, Calendar, Settings, LogOut ,GraduationCap,LayoutDashboard,BarChart3,NotebookPen, User} from 'lucide-react';
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -23,9 +23,10 @@ interface SidebarItem {
 
 export function AppSidebar() {
   const location = useLocation();
-
+  
   const sidebarItems: SidebarItem[] = [
-    { title: 'Profil', icon: Users, href: "/Profile" },
+    { title: 'Profil', icon: User, href: "/Profile" },
+    { title: 'Liste des employés', icon: Users, href: "/EmployeeList" },
     { title: 'Formations', icon: GraduationCap, href: "/Formations" },
     // { title: 'Evaluations', icon: NotebookPen, href: "/Evaluations" },
     { title: 'Compétences', icon: BarChart3, href: "/Skills" },

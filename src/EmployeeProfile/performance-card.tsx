@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react"
 import { Phone, History, Frown, Meh, Smile, Laugh, Star } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -85,13 +87,9 @@ export function PerformanceCard({ performance }: PerformanceCardProps) {
           <div className="flex flex-col items-center space-y-2">
             <div className="flex items-center gap-1">
               {getSatisfactionIcon(performance.satisfactionClient)}
-              {performance.satisfactionClient === 5 && (
-                <Star className="h-20 w-20 text-yellow-400 ml-1" />
-              )}
+              {performance.satisfactionClient === 5 && <Star className="h-20 w-20 text-yellow-400 ml-1" />}
             </div>
-            <p className="text-2xl font-bold">
-              {performance.satisfactionClient.toFixed(1)}/5
-            </p>
+            <p className="text-2xl font-bold">{performance.satisfactionClient.toFixed(1)}/5</p>
           </div>
 
           <Button onClick={() => setIsHistoryOpen(true)} className="w-full mt-4">

@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react"
 import { Book, Calendar, Star } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
@@ -131,3 +133,4 @@ export function TrainingCard({ formations }: TrainingCardProps) {
     </>
   )
 }
+

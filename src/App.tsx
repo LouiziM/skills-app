@@ -1,13 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { AuthGuard } from "./lib/AuthGuard"
 import Nav from "./Sidebar/nav/Nav"
-import EmployeeProfile from "./Employee/employee-profile"
+import EmployeeProfile from "./EmployeeProfile/employee-profile"
 import Dashboard from "./Dashboard/Dashboard"
 import SkillsView from "./Skills/SkillsView"
 import EvaluationView from "./Evaluations/EvaluationView"
 import Test from "./test/test"
 import Notifications from "./Notification/notifications"
 import Trainings from "./Formations/trainings"
+import EmployeeList from "./EmployeeList/employee-list"
 
 
 export default function App() {
@@ -16,7 +17,7 @@ export default function App() {
       <Routes>
         {/* <Route path="/" element={<Home />} /> */}
         {/* <Route path="/login" element={<Login />} /> */}
-        <Route
+        {/* <Route
           path="/Dashboard"
           element={
             <AuthGuard>
@@ -25,7 +26,7 @@ export default function App() {
               </Nav>
             </AuthGuard>
           }
-        />
+        /> */}
         <Route
           path="/Formations"
           element={
@@ -46,7 +47,7 @@ export default function App() {
             </AuthGuard>
           }
         />
-        <Route
+        {/* <Route
           path="/Evaluations"
           element={
             <AuthGuard>
@@ -65,7 +66,7 @@ export default function App() {
               </Nav>
             </AuthGuard>
           }
-        />
+        /> */}
 
         <Route
           path="/Notifications"
@@ -83,6 +84,16 @@ export default function App() {
             <AuthGuard>
               <Nav>
                 <EmployeeProfile />
+              </Nav>
+            </AuthGuard>
+          }
+        />
+          <Route
+          path="/EmployeeList"
+          element={
+            <AuthGuard>
+              <Nav>
+                <EmployeeList />
               </Nav>
             </AuthGuard>
           }

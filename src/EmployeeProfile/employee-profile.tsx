@@ -1,4 +1,6 @@
-import { useState } from "react"
+"use client"
+import { ArrowLeft } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import { EmployeeProfileCard } from "./employee-profile-card"
 import { PerformanceCard } from "./performance-card"
 import { WorkloadPresenceCard } from "./workload-presence-card"
@@ -6,22 +8,72 @@ import { TrainingCard } from "./training-card"
 import { SkillsCard } from "./skills-card"
 import { EmployeeFeedbackCard } from "./employee-feedback-card"
 
-export default function EmployeeProfile() {
-  // Sample employee data
-  const [employee] = useState({
-    civilité: "Mme", // Added civilité
+type Employee = {
+  id: string
+  civilité: "M." | "Mme"
+  nom: string
+  prénom: string
+  nationalité: string
+  dateDeNaissance: string
+  téléphonePrincipal: string
+  téléphoneSecondaire: string
+  email: string
+  pays: string
+  ville: string
+  adresse: string
+  dateEmbauche: string
+  typeContrat: string
+  position: string
+  department: string
+  avatar: string
+  performance: {
+    appelsResolus: number
+    appelsEscalades: number
+    appelsAbandonnes: number
+    dureeMoyenne: string
+    tempsAttenteMoyen: string
+    tauxPresence: string
+    productiviteHoraire: number
+    tauxResolution: string
+    satisfactionClient: number
+  }
+  workloadPresence: {
+    heuresTravaillees: number
+    heuresPrevues: number
+    absences: number
+    retards: number
+    posteActuel: string
+    dateDebutPoste: string
+    projetActuel: string
+  }
+  projects: any[]
+  formations: any[]
+  skills: any[]
+  feedback: any[]
+}
+
+type EmployeeProfileProps = {
+  employee?: Employee
+  onBack?: () => void
+}
+
+const EmployeeProfile=({ employee, onBack }: EmployeeProfileProps)=> {
+  // Employé par défaut si aucun n'est fourni
+  const defaultEmployee: Employee = {
+    id: "1",
+    civilité: "Mme",
     nom: "Doe",
     prénom: "Jane",
     nationalité: "Française",
-    dateDeNaissance: "1990-03-15", // Added dateDeNaissance
+    dateDeNaissance: "1990-03-15",
     téléphonePrincipal: "+33 1 23 45 67 89",
-    téléphoneSecondaire: "+33 6 12 34 56 78", // Added téléphoneSecondaire
+    téléphoneSecondaire: "+33 6 12 34 56 78",
     email: "jane.doe@company.com",
-    pays: "France", // Added pays
-    ville: "Paris", // Added ville
-    adresse: "123 Rue de l'Exemple, 75001", // Added adresse
-    dateEmbauche: "15 Mars 2020", // Renamed joinDate to dateEmbauche
-    typeContrat: "CDI", // Added typeContrat
+    pays: "France",
+    ville: "Paris",
+    adresse: "123 Rue de l'Exemple, 75001",
+    dateEmbauche: "15 Mars 2020",
+    typeContrat: "CDI",
     position: "Agent de Centre d'Appels",
     department: "Service Client",
     avatar: "/placeholder.svg?height=400&width=400",
@@ -54,6 +106,8 @@ export default function EmployeeProfile() {
         dateFin: "",
         manager: "Marie Martin",
         description: "Support technique pour les clients du secteur télécom.",
+        créePar: "Marie Martin",
+        créeLe: "15 Décembre 2022",
       },
       {
         id: "2",
@@ -63,6 +117,8 @@ export default function EmployeeProfile() {
         dateFin: "31 Décembre 2022",
         manager: "Pierre Dupont",
         description: "Gestion des appels pour une plateforme e-commerce.",
+        créePar: "Pierre Dupont",
+        créeLe: "15 Mai 2022",
       },
       {
         id: "3",
@@ -72,6 +128,8 @@ export default function EmployeeProfile() {
         dateFin: "31 Mai 2022",
         manager: "Sophie Lefebvre",
         description: "Assistance technique pour les logiciels clients.",
+        créePar: "Sophie Lefebvre",
+        créeLe: "15 Décembre 2021",
       },
     ],
     formations: [
@@ -197,25 +255,35 @@ export default function EmployeeProfile() {
         pointsAmélioration: "Suivi des solutions alternatives",
       },
     ],
-  });
+  }
+
+  const currentEmployee = employee || defaultEmployee
+
   return (
-    <div className="container mx-auto max-w-7xl">
+    <div className="container mx-auto py-6">
+      {onBack && (
+        <Button variant="outline" onClick={onBack} className="mb-4">
+          <ArrowLeft className="mr-2 h-4 w-4" /> Retour à la liste
+        </Button>
+      )}
+
       {/* Main Employee Card */}
-      <EmployeeProfileCard employee={employee} />
+      <EmployeeProfileCard employee={currentEmployee} />
 
       {/* Performance and Workload Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <PerformanceCard performance={employee.performance} />
-        <WorkloadPresenceCard workloadPresence={employee.workloadPresence} projects={employee.projects} />
+        <PerformanceCard performance={currentEmployee.performance} />
+        <WorkloadPresenceCard workloadPresence={currentEmployee.workloadPresence} projects={currentEmployee.projects} />
       </div>
 
       {/* Training, Skills, and Feedback Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-        <TrainingCard formations={employee.formations} />
-        <SkillsCard skills={employee.skills} />
-        <EmployeeFeedbackCard feedback={employee.feedback} />
+        <TrainingCard formations={currentEmployee.formations} />
+        <SkillsCard skills={currentEmployee.skills} />
+        <EmployeeFeedbackCard feedback={currentEmployee.feedback} />
       </div>
     </div>
   )
 }
 
+export default EmployeeProfile;

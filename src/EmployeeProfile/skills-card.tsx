@@ -1,7 +1,9 @@
+"use client"
+
 import { useState } from "react"
 import { Briefcase, ChevronUp, ChevronDown } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
-import Bar  from "@/components/ui/bar"
+import Bar from "@/components/ui/bar"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
@@ -88,7 +90,11 @@ export function SkillsCard({ skills }: SkillsCardProps) {
                   <div className="mt-2 space-y-2">
                     <p className="text-sm">Type: {skill.type}</p>
                     <p className="text-sm">Niveau: {skill.niveau}</p>
-                    <Bar displayPercentage={false} percentage={skill.progression} color={getProgressColor(skill.niveau)} />
+                    <Bar
+                      displayPercentage={false}
+                      percentage={skill.progression}
+                      color={getProgressColor(skill.niveau)}
+                    />
                   </div>
                 )}
               </div>
@@ -100,4 +106,3 @@ export function SkillsCard({ skills }: SkillsCardProps) {
   )
 }
 
-  

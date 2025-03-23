@@ -5,22 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
-interface Training {
-  id: number
-  title: string
-  type: string
-  startDate: string
-  endDate: string
-  status: string
-  description: string
-  instructor: string
-  enrolledCount: number
-  maxCapacity: number
-  feedback?: {
-    satisfaction: number
-    comments: string[]
-  }
-}
+import type { Training } from "./types"
 
 interface TrainingCardProps {
   training: Training
@@ -28,7 +13,7 @@ interface TrainingCardProps {
   isManagerOrHR?: boolean
 }
 
-export function TrainingCard({ training, onViewDetails, isManagerOrHR = true }: TrainingCardProps) {
+export function TrainingCard({ training, onViewDetails, isManagerOrHR = false }: TrainingCardProps) {
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "planifié":
@@ -53,8 +38,12 @@ export function TrainingCard({ training, onViewDetails, isManagerOrHR = true }: 
     }
   }
 
+  const canRegister =
+    (training.status.toLowerCase() === "planifié" || training.status.toLowerCase() === "en cours") &&
+    training.enrolledCount < training.maxCapacity
+
   return (
-    <Card className="flex flex-col hover:shadow-lg transition-shadow duration-300 mb-4 w-full h-full">
+    <Card className="flex flex-col hover:shadow-lg transition-shadow duration-300 mb-4 w-full h-full bg-white">
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
           <div>
@@ -90,13 +79,14 @@ export function TrainingCard({ training, onViewDetails, isManagerOrHR = true }: 
         <Button variant="outline" size="sm" onClick={() => onViewDetails(training)}>
           Voir les Détails
         </Button>
-        {!isManagerOrHR &&
-          (training.status.toLowerCase() === "planifié" || training.status.toLowerCase() === "en cours") &&
-          training.enrolledCount < training.maxCapacity && (
-            <Button size="sm" className="bg-blue-500 hover:bg-blue-600 text-white">
-              S'inscrire
-            </Button>
-          )}
+
+        {/* Only show registration buttons for non-managers/HR */}
+        {!isManagerOrHR && canRegister && (
+          <Button size="sm" className="bg-blue-500 hover:bg-blue-600 text-white">
+            S'inscrire
+          </Button>
+        )}
+
         {!isManagerOrHR &&
           (training.status.toLowerCase() === "planifié" || training.status.toLowerCase() === "en cours") &&
           training.enrolledCount >= training.maxCapacity && (

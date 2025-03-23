@@ -1,8 +1,10 @@
+"use client"
+
 import { useState } from "react"
 import { Clock, Calendar, AlertCircle, Briefcase, FolderOpen, TrafficCone } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import Bar  from "@/components/ui/bar"
+import Bar from "@/components/ui/bar"
 import { Button } from "@/components/ui/button"
 import { ProjectsDialog } from "./projects-dialog"
 
@@ -32,7 +34,7 @@ type WorkloadPresenceCardProps = {
 // Utility function to determine progress bar color
 const getProgressColor = (percentage: number) => {
   if (percentage >= 90) return "bg-green-500" // Green for excellent presence
-  if (percentage >= 70) return "bg-blue-500"  // Blue for good presence
+  if (percentage >= 70) return "bg-blue-500" // Blue for good presence
   if (percentage >= 50) return "bg-yellow-500" // Yellow for average presence
   return "bg-red-500" // Red for poor presence
 }
@@ -57,7 +59,11 @@ export function WorkloadPresenceCard({ workloadPresence, projects }: WorkloadPre
               <p className="text-sm font-medium">Taux de Présence</p>
               <p className="text-sm font-medium">{tauxPresence}%</p>
             </div>
-            <Bar displayPercentage={false} percentage={Number.parseFloat(tauxPresence)}  color={getProgressColor(Number.parseFloat(tauxPresence))} />
+            <Bar
+              displayPercentage={false}
+              percentage={Number.parseFloat(tauxPresence)}
+              color={getProgressColor(Number.parseFloat(tauxPresence))}
+            />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -104,7 +110,7 @@ export function WorkloadPresenceCard({ workloadPresence, projects }: WorkloadPre
 
           <div>
             <div className="flex items-center gap-2 mb-[12px]">
-              <TrafficCone className="h-4 w-4 text-muted-foreground" /> 
+              <TrafficCone className="h-4 w-4 text-muted-foreground" />
               <p className="text-sm font-medium mb-1">Projet en Cours</p>
             </div>
             <p className="text-base">{workloadPresence.projetActuel}</p>
@@ -121,3 +127,4 @@ export function WorkloadPresenceCard({ workloadPresence, projects }: WorkloadPre
     </>
   )
 }
+
