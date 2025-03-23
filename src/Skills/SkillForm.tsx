@@ -75,7 +75,7 @@ export default function SkillForm({ skill, onSave, onCancel }: SkillFormProps) {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="grid mb-4">
             <div>
               <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-1">
                 Type
@@ -89,24 +89,6 @@ export default function SkillForm({ skill, onSave, onCancel }: SkillFormProps) {
               >
                 <option value="Technique">Technique</option>
                 <option value="Comportemental">Comportemental</option>
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="level" className="block text-sm font-medium text-gray-700 mb-1">
-                Niveau
-              </label>
-              <select
-                id="level"
-                name="level"
-                value={formData.level}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              >
-                <option value="Débutant">Débutant</option>
-                <option value="Intermédiaire">Intermédiaire</option>
-                <option value="Avancé">Avancé</option>
-                <option value="Expert">Expert</option>
               </select>
             </div>
           </div>

@@ -63,7 +63,6 @@ export default function SkillsManagement() {
 
   const [searchTerm, setSearchTerm] = useState("")
   const [filterType, setFilterType] = useState<string>("")
-  const [filterLevel, setFilterLevel] = useState<string>("")
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [currentSkill, setCurrentSkill] = useState<Skill | null>(null)
 
@@ -74,9 +73,7 @@ export default function SkillsManagement() {
       skill.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       skill.description.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesType = filterType ? skill.type === filterType : true
-    const matchesLevel = filterLevel ? skill.level === filterLevel : true
-
-    return matchesSearch && matchesType && matchesLevel
+    return matchesSearch && matchesType 
   })
 
   const handleAddSkill = () => {
@@ -153,21 +150,6 @@ export default function SkillsManagement() {
                   <option value="Comportemental">Comportemental</option>
                 </select>
               </div>
-
-              <div className="relative">
-                <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <select
-                  value={filterLevel}
-                  onChange={(e) => setFilterLevel(e.target.value)}
-                  className="pl-10 pr-8 py-2 border rounded-md appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                >
-                  <option value="">Tous les niveaux</option>
-                  <option value="Débutant">Débutant</option>
-                  <option value="Intermédiaire">Intermédiaire</option>
-                  <option value="Avancé">Avancé</option>
-                  <option value="Expert">Expert</option>
-                </select>
-              </div>
             </div>
           </div>
         </div>
@@ -178,9 +160,6 @@ export default function SkillsManagement() {
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Niveau
-                </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Description
                 </th>
@@ -208,21 +187,6 @@ export default function SkillsManagement() {
                         }`}
                       >
                         {skill.type}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          skill.level === "Débutant"
-                            ? "bg-gray-100 text-gray-800"
-                            : skill.level === "Intermédiaire"
-                              ? "bg-yellow-100 text-yellow-800"
-                              : skill.level === "Avancé"
-                                ? "bg-orange-100 text-orange-800"
-                                : "bg-red-100 text-red-800"
-                        }`}
-                      >
-                        {skill.level}
                       </span>
                     </td>
                     <td className="px-6 py-4">

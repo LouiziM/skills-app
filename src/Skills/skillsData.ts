@@ -13,7 +13,8 @@ export const skillsData = [
     name: "Dépannage Technique",
     type: "Technique",
     level: "Intermédiaire",
-    description: "Capacité à diagnostiquer et résoudre des problèmes techniques grâce à des approches systématiques de résolution de problèmes.",
+    description:
+      "Capacité à diagnostiquer et résoudre des problèmes techniques grâce à des approches systématiques de résolution de problèmes.",
     createdAt: "2023-06-22",
   },
   {
@@ -42,4 +43,5 @@ export const skillsData = [
     description: "Gérer efficacement son temps pour traiter plusieurs tâches et demandes clients de manière efficace.",
     createdAt: "2023-03-18",
   },
-];
+]
+

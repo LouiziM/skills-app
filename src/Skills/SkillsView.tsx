@@ -19,7 +19,6 @@ export default function SkillsView() {
   const [skills, setSkills] = useState<Skill[]>(skillsData)
   const [searchTerm, setSearchTerm] = useState("")
   const [filterType, setFilterType] = useState<string>("")
-  const [filterLevel, setFilterLevel] = useState<string>("")
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [currentSkill, setCurrentSkill] = useState<Skill | null>(null)
 
@@ -28,9 +27,8 @@ export default function SkillsView() {
       skill.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       skill.description.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesType = filterType ? skill.type === filterType : true
-    const matchesLevel = filterLevel ? skill.level === filterLevel : true
 
-    return matchesSearch && matchesType && matchesLevel
+    return matchesSearch && matchesType
   })
 
   const handleAddSkill = () => {
@@ -84,8 +82,6 @@ export default function SkillsView() {
           setSearchTerm={setSearchTerm}
           filterType={filterType}
           setFilterType={setFilterType}
-          filterLevel={filterLevel}
-          setFilterLevel={setFilterLevel}
         />
 
         <SkillsTable skills={filteredSkills} onEdit={handleEditSkill} onDelete={handleDeleteSkill} />

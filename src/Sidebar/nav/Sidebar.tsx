@@ -25,10 +25,10 @@ export function AppSidebar() {
   const location = useLocation();
 
   const sidebarItems: SidebarItem[] = [
-    { title: 'Profile', icon: Users, href: "/Profile" },
+    { title: 'Profil', icon: Users, href: "/Profile" },
     { title: 'Formations', icon: GraduationCap, href: "/Formations" },
     // { title: 'Evaluations', icon: NotebookPen, href: "/Evaluations" },
-    { title: 'Skills', icon: BarChart3, href: "/Skills" },
+    { title: 'Compétences', icon: BarChart3, href: "/Skills" },
     // { title: 'Dashboard', icon: LayoutDashboard, href: "/Dashboard" },
     // { title: 'Test', icon: BarChart2, href: "/Test" },
   ];
@@ -42,7 +42,7 @@ export function AppSidebar() {
         <img
           src={konectaLogo}
           alt="Logo"
-          className="mx-auto h-15 w-35 my-6"
+          className="mx-auto h-15 w-42 my-6"
         />
       </SidebarHeader>
       <SidebarContent>
